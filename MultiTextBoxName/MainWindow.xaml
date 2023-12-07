@@ -1,0 +1,112 @@
+﻿<Window x:Class="MultiTextBoxName.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:materialdesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <ControlTemplate x:Key="MultiTextBoxTemplate" TargetType="ContentControl">
+            <Grid DataContext="{TemplateBinding Content}" FlowDirection="RightToLeft">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox x:Name="dummyTextBox" Grid.Column="0"  TextAlignment="Center" HorizontalAlignment="Stretch" Grid.ColumnSpan="3"
+                             materialdesign:HintAssist.Hint="{Binding Path=(materialdesign:HintAssist.Hint),RelativeSource={RelativeSource Mode=TemplatedParent}}" 
+                             materialdesign:HintAssist.IsFloating="False"
+                             materialdesign:HintAssist.HintOpacity="0.20"
+                             materialdesign:HintAssist.FloatingHintHorizontalAlignment="Right"
+                             Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
+                             IsTabStop="False" IsHitTestVisible="False"
+                             IsReadOnly="True"
+                             FlowDirection="LeftToRight">
+                </TextBox>
+
+                <TextBox x:Name="FirstNameTextBox" Grid.Column="0" Text="{Binding FirstName, Mode=TwoWay}" TextAlignment="Left" HorizontalAlignment="Stretch"
+                                         materialdesign:HintAssist.Hint="اسم" Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
+                                         materialdesign:HintAssist.IsFloating="False"
+                                         materialdesign:HintAssist.HintOpacity="0.30"
+                                         TabIndex="0" Grid.ColumnSpan="3"
+                                         VerticalAlignment="Bottom"
+                                         Opacity="0.001"/>
+
+                <TextBox x:Name="SecondNameTextBox"  Grid.Column="1" Text="{Binding SecondName, Mode=TwoWay}" TextAlignment="Left" HorizontalAlignment="Stretch"
+                                         materialdesign:HintAssist.Hint="الأب" Style="{DynamicResource  MaterialDesignFloatingHintTextBox}"
+                                         materialdesign:HintAssist.IsFloating="False"
+                                         materialdesign:HintAssist.HintOpacity="0.30"
+                                         VerticalAlignment="Bottom"
+                                         TabIndex="1" Visibility="Collapsed"/>
+
+                <TextBox x:Name="LastNameTextBox"  Grid.Column="2" Grid.Row="2" Text="{Binding LastName, Mode=TwoWay}" TextAlignment="Left"  HorizontalAlignment="Stretch"
+                                         materialdesign:HintAssist.Hint="الجد" Style="{DynamicResource  MaterialDesignFloatingHintTextBox}"
+                                         materialdesign:HintAssist.IsFloating="False"
+                                         materialdesign:HintAssist.HintOpacity="0.30"
+                                         VerticalAlignment="Bottom"
+                                         TabIndex="2" Visibility="Collapsed"/>
+
+            </Grid>
+
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                    <Setter TargetName="FirstNameTextBox" Property="Opacity" Value="1"/>
+                    <Setter TargetName="FirstNameTextBox" Property="Grid.ColumnSpan" Value="1"/>
+                    <Setter TargetName="SecondNameTextBox" Property="Visibility" Value="Visible"/>
+                    <Setter TargetName="LastNameTextBox" Property="Visibility" Value="Visible"/>
+                    <Setter TargetName="dummyTextBox" Property="Text" Value=" "/>
+                </Trigger>
+                <Trigger Property="IsKeyboardFocusWithin" Value="false">
+                    <Setter TargetName="dummyTextBox" Property="Text" Value="{Binding Path=FullName}"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+            
+        </ControlTemplate>
+        
+        <Style x:Key="MultiTextBox" TargetType="ContentControl">
+            <Setter Property="materialdesign:HintAssist.HintOpacity" Value="0.20"/>
+            <Setter Property="materialdesign:HintAssist.IsFloating" Value="False"/>
+            <Setter Property="materialdesign:HintAssist.FontFamily" Value="Sakkal Majalla"/>
+            <Setter Property="materialdesign:ColorZoneAssist.Mode" Value="Dark"/>
+            <Setter Property="FontFamily" Value="ATraditional Arabic"/>
+            <Setter Property="Foreground" Value="AliceBlue"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="Margin" Value="10 0 0 0"/>
+            <Setter Property="IsTabStop" Value="False"/>
+            <Setter Property="Template" Value="{StaticResource MultiTextBoxTemplate}"/>
+        </Style> 
+    </Window.Resources>
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FF06013F" Offset="1"/>
+                <GradientStop Color="#FF040F2E"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" FlowDirection="RightToLeft">
+            <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
+                     Text="{Binding ID}"
+                     materialdesign:HintAssist.Hint="ID" 
+                     materialdesign:HintAssist.HintOpacity="0.20"
+                     materialdesign:HintAssist.IsFloating="False"
+                     materialdesign:HintAssist.FontFamily="Sakkal Majalla"
+                     materialdesign:ColorZoneAssist.Mode="Dark"
+                     FontFamily="ATraditional Arabic"
+                     Foreground="AliceBlue"
+                     FontSize="20"
+                     FontWeight="Normal"
+                     Margin="0 0 0 0"
+                     IsTabStop="False"/>
+                <ContentControl Style="{StaticResource MultiTextBox}"
+                        materialdesign:HintAssist.Hint="الأسم"
+                        MinWidth="300"
+                        MaxWidth="400"
+                        VerticalAlignment="Bottom"
+                        Content="{Binding Path=FullName, Mode=TwoWay}"/>
+        </StackPanel>
+    </Grid>
+</Window>
