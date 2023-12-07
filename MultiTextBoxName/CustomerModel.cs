@@ -24,25 +24,27 @@ namespace MultiTextBoxName
         {
             get { return this._FirstName; }
             set
-            { 
-                if(value !=  this._FirstName)
+            {
+                if (value != this._FirstName)
                 {
                     this._FirstName = value;
+                    OnChange();
                     OnPropertyChanged(nameof(_FirstName));
                 }
             }
         }
 
-        private string _SecondName;
-        public string SecondName
+        private string _MiddleName;
+        public string MiddleName
         {
-            get { return this._SecondName; }
+            get { return this._MiddleName; }
             set
             {
-                if (value != this._SecondName)
+                if (value != this._MiddleName)
                 {
-                    this._SecondName = value;
-                    OnPropertyChanged(nameof(_SecondName));
+                    this._MiddleName = value;
+                    OnChange();
+                    OnPropertyChanged(nameof(_MiddleName));
                 }
             }
         }
@@ -56,24 +58,21 @@ namespace MultiTextBoxName
                 if (value != this._LastName)
                 {
                     this._LastName = value;
+                    OnChange();
                     OnPropertyChanged(nameof(_LastName));
                 }
             }
         }
 
+        private void OnChange()
+        {
+            _FullName = FirstName + " " + MiddleName + " " + LastName;
+        }
 
-        private MultiNameTextBoxControl _FullName = new MultiNameTextBoxControl();
-        public MultiNameTextBoxControl FullName
+        public string _FullName;
+        public string FullName
         {
             get { return this._FullName; }
-            set
-            {
-                if (value != this._FullName)
-                {
-                    this._FullName = value;
-                    OnPropertyChanged(nameof(_FullName));
-                }
-            }
         }
 
 

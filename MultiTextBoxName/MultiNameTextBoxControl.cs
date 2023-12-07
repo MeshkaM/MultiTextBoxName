@@ -16,13 +16,13 @@ namespace MultiTextBoxName
             }
         }
 
-        private string _SecondName;
-        public string SecondName
+        private string _MiddleName;
+        public string MiddleName
         {
-            get => _SecondName;
+            get => _MiddleName;
             set
             {
-                _SecondName = value;
+                _MiddleName = value;
                 OnChange();
                 OnPropertyChanged();
             }
@@ -43,7 +43,7 @@ namespace MultiTextBoxName
 
         private void OnChange()
         {
-            FullName = FirstName + " " + SecondName + " " + LastName;
+            FullName = FirstName + " " + MiddleName + " " + LastName;
         }
 
         public string _FullName;
